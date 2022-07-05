@@ -32,9 +32,31 @@ Cambios realizados en el Proyecto Comex.
 		- Si Tecla utilizo SHIFT busco el td anterior que sea editable y no sea un checkbox, para capturar su índice.
 		- Si Tecla no utilizo SHIFT busco el td siguiente siguiendo la lógica anterior.
 		- Si Indice es negativo busco la siguiente tr, o la anterior si tecla utilizo SHIFT.
-		- Con índice busco la celda que posea dicho índice (tr y td) y se activa la edición con .setEditing.
-
-
+		- Con índice busco la celda que posea dicho índice (tr y td) y se activa la edición con setEditing.
+- Metodo saveEditing: Salva la edición del selector siempre y cuando este sea del tipo td, y envia un evento a dropEditing(update=false) si valor anterior es diferente al valor actual update es True.
+- Metodo dropEditing(update=false): Sale del modo de edición del selector tipo td, borrando los controles que fueron creados por setEditing, setea el nuevo valor del td y lanza un trigger updatesuccess al td, indicando un cambio de valor.
+- Metodo setEditing: Convierte en editable la td, tomando como valor inicial el valor actual del td, se utiliza getValue para obtener su valor en función a la lógica del método, el nuevo objeto editable heredara todas las clases que posee el td
+- Metodo getProp(prop): Obtiene la propiedad prop del Selector, si no existe retorna undefined.
+- Metodo setProp(prop,val): Setea el valor (val) a la propiedad (prop) del selector si no existe retorna undefined, si existe retorna el objeto Comex Object
+- Metodo initTable: Inicializa como grid una tabla, creando el objeto comexObject con las propiedades indicadas en cada th / tr.
+- Metodo initColumna: Inicializa una columna de una tabla tomando las propiedades declaradas en ella y asignándolas al objeto comexObject, para luego buscar cada celda dentro de la columna e inicializarla con las mismas propiedades, las propiedades son:
+	- Key: String Utilizada como la llave de la columna se usa como identificador de cada columna (debe ser único en una tabla), por defecto noSet.
+	- AllowUpdate: Boolean Determina si la columna es editable o no, por defecto false.
+	- Format: String Determina el formato a usar para columna (cabe destacar que ciertos Type determinan un formato).
+	- ValueList: Array Arreglo de objetos que seran utilizados para llenar un DropList (select), para los casos donde Type sera DropDownList.
+	- Type: String determina el tipo de dato que manejara la columna, los valores permitidos son (DropDownList, CheckBox, Text, Date, DateTime), por defecto Text, cabe destacar que ciertos Type determinan el tipo de dato de la columna:
+		- CheckBox: se considera como Boolean el tipo de dato y solo se esperan datos True o False.
+		- Date: se considera como Date / DateTime la columna, y espera datos dentro del formato yyyy-mm-dd o yyyy-mm-dd hh:MM:ss
+		- DropDownList: Para este tipo de Columna se requiere un drop (select) en el DOM con los valores de dicha columna (ya que dicha columna solo recibirá un código y su respectivo valor debe de obtenerse de una lista de valores, dicho drop debe tener la propiedad DropDownList con el nombre de la tabla seguido del campo, por ejemplo: tabla_id.campo_key.
+- Metodo initCell: Inicializa la celda td con los datos pre definidos de la columna th, siguiendo la lógica:
+	- Si th Type es DropDownList toma el valor de la celda y lo busca en el drop tabla_id.columna_key, para obtener su texto y mostrarlo.
+	- Si th Type es CheckBox, dibuja un checkbox utilizando el método setCheckBox, inactivo según el valor True o False.
+	- Si th es Date formatea la fecha dd-mm-yyyy, quitando el fragmento de la hora si lo posee.
+	- Si th es DateTime formatea la fecha dd-mm-yyyy hh:MM:ss, quitando el fragmento de los microsegundos.
+- Metodo setCheckBox(checked=false,enable=true): Crea un checkbox con diseño y lo active según el valor de checked, y lo habilita según el valor de enable.
+- Metodo initRow: Inicializa una row de una tabla tomando las propiedades declaradas en ella y asignándolas al objeto comexObject, las propiedades son:
+	- Key: String Utilizada como la llave de la columna se usa como identificador de cada columna (debe ser único en una tabla), por defecto noSet.
+- Metodo addRow: Agrega una row (tr) a una tabla inicializada previamente como grid, heredando de las columnas sus propiedades.
 
 
 
@@ -54,4 +76,4 @@ Cambios realizados en el Proyecto Comex.
 - Funcion mensajeMVC(): (Sin Usar) Invoca la función dialog() pasando cada mensaje obtenido de validation_sumary.
 - Funcion dialog(msj,class): (Sin Usar) Invoca toast pasando el msj y class para lanzar una alerta.
 
-## [Unreleased]
+## [Proximos Cambios]
