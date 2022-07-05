@@ -4,6 +4,7 @@ Cambios realizados en el Proyecto Comex.
 ## [0.0.1] - 2022-07-01
 ### Added
 - Se crea archivo LOG (CHANGELOG.md).
+    -   Prueba
 
 ### Changed
 - Refer to a "change log" instead of a "CHANGELOG" throughout the site to
